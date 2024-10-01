@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+require("reflect-metadata");
+const express_1 = __importDefault(require("express"));
+const product_router_1 = __importDefault(require("./routes/product.router"));
+const error_1 = require("./utils/error");
+const logger_1 = require("./utils/logger");
+const mongo_db_1 = require("./db/mongo.db");
+const cart_router_1 = __importDefault(require("./routes/cart.router"));
+const authValidation_1 = require("./middleware/authValidation");
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+(0, mongo_db_1.connectMongo)();
+app.use(authValidation_1.AuthMiddleware);
+app.use(logger_1.httpLogger);
+app.use("/", product_router_1.default);
+app.use("/", cart_router_1.default);
+app.use(error_1.HandleErrorWithLogger);
+exports.default = app;

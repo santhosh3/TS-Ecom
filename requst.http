@@ -1,0 +1,36 @@
+@hostname = http://localhost:3500/api/v1
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI5IiwiZXhwaXJlc0F0IjoxNzI3NTA2OTMwfQ.iBh9uHVyyBSKQ3jU0G3Z566Pld8iKTdGnqyVrnbafa0
+@refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI5IiwiZXhwaXJlc0F0IjoxNzI4MTA3MjkzfQ._-XNa8wUuwsZjsICVmNgKla8Nb3El2dIy2jjyoGBC2Q
+
+
+POST  http://localhost:3000/cart
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+    "productId" : "3",
+    "quantity" : 10
+}
+
+###
+
+GET  http://localhost:3000/cart
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+    "productId" : "3",
+    "quantity" : 10
+}
+
+###
+
+PUT  http://localhost:3000/cart
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+    "productId" : "3",
+    "quantity" : 13,
+    "removeProduct" : 1
+}

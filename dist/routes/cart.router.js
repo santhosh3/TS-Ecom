@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cart_controller_1 = require("../controllers/cart.controller");
+const cartRepository_1 = require("../repository/cartRepository");
+const cartInteractor_1 = require("../interactors/cartInteractor");
+const inversify_1 = require("inversify");
+const appConst_1 = require("../utils/appConst");
+const container = new inversify_1.Container();
+container.bind(appConst_1.INTERFACE_TYPE.CartRepository).to(cartRepository_1.CartRepository);
+container.bind(appConst_1.INTERFACE_TYPE.CartInteractor).to(cartInteractor_1.CartInteractor);
+container.bind(appConst_1.INTERFACE_TYPE.CartController).to(cart_controller_1.CartController);
+const controller = container.get(appConst_1.INTERFACE_TYPE.CartController);
+const cartRouter = express_1.default.Router();
+cartRouter.post("/cart", controller.onCreateCart.bind(controller));
+cartRouter.get("/cart", controller.getUserCart.bind(controller));
+exports.default = cartRouter;
